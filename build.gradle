@@ -18,11 +18,41 @@ repositories {
 }
 
 dependencies {
+	// --- Spring Boot (skeleton có sẵn, giữ để Spring context load nếu cần) ---
 	implementation 'org.springframework.boot:spring-boot-starter'
+
+	// --- Selenium 4 (có Selenium Manager tự tải ChromeDriver) ---
+	implementation 'org.seleniumhq.selenium:selenium-java'
+	implementation 'org.seleniumhq.selenium:selenium-chrome-driver'
+	implementation 'org.seleniumhq.selenium:selenium-support'
+
+	// --- JUnit 5 (Jupiter) ---
+	testImplementation 'org.junit.jupiter:junit-jupiter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// --- Assertions: AssertJ (mạch lạc, dễ đọc hơn JUnit assert) ---
+	testImplementation 'org.assertj:assertj-core'
+
+	// --- Allure ---
+	testImplementation 'io.qameta.allure:allure-junit5'
+	testImplementation 'io.qameta.allure:allure-attachments'
+
+	// --- Logging (SLF4J + Logback) ---
+	implementation 'org.slf4j:slf4j-api'
+	testRuntimeOnly 'ch.qos.logback:logback-classic'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	// Cho phép chạy: ./gradlew test -Dheadless=true
+	systemProperty 'headless', project.findProperty('headless') ?: 'false'
+	// Allure 2.x đọc system property này để xuất results
+	systemProperty 'allure.results.directory', 'build/allure-results'
+
+	testLogging {
+		events 'passed', 'skipped', 'failed'
+		exceptionFormat = 'full'
+		showStandardStreams = false
+	}
 }
