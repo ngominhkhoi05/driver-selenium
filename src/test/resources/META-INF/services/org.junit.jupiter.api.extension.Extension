@@ -1,0 +1,2 @@
+com.ws.driver_selenium.tests.hooks.AllureScreenshotExtension
+com.ws.driver_selenium.tests.hooks.EnvironmentWriter
