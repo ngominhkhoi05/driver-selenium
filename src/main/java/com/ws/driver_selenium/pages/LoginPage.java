@@ -29,16 +29,16 @@ public class LoginPage extends BasePage {
             "https://vanphongdientu.utc.edu.vn/Login?r=https%3A%2F%2Fvanphongdientu.utc.edu.vn%2F";
 
     // ---------------- Locators ----------------
-    private static final By FORM            = By.cssSelector("form[action='/Login'][method='post']");
-    private static final By USERNAME_INPUT  = By.cssSelector("input[name='username']");
-    private static final By PASSWORD_INPUT  = By.cssSelector("input[name='userpwd']");
-    private static final By REMEMBER_INPUT  = By.cssSelector("input#persistent");
-    private static final By REMEMBER_LABEL  = By.cssSelector("label[for='persistent']");
-    private static final By REMEMBER_CHECK  = By.cssSelector("label.check[for='persistent']");
-    private static final By GOOGLE_OAUTH    = By.cssSelector("a.button");
-    private static final By SUBMIT_BUTTON   = By.cssSelector("input.submit_login[type='submit']");
-    private static final By FORGOT_LINK     = By.cssSelector("div.helps a[href='/Login/GetPass']");
-    private static final By ERROR_DIV       = By.cssSelector("div.error");
+    // Lưu ý: Trang login UTC thật KHÔNG còn Remember Me checkbox nữa
+    // (đã bị loại bỏ khỏi UI). Giữ method setRememberMe() / isRememberMeSelected()
+    // ở dạng no-op an toàn để tương thích với HardcodedTestCases (vẫn có field rememberMe).
+    private static final By FORM           = By.cssSelector("form[action='/Login'][method='post']");
+    private static final By USERNAME_INPUT = By.cssSelector("input[name='username']");
+    private static final By PASSWORD_INPUT = By.cssSelector("input[name='userpwd']");
+    private static final By GOOGLE_OAUTH   = By.cssSelector("a.button");
+    private static final By SUBMIT_BUTTON  = By.cssSelector("input.submit_login[type='submit']");
+    private static final By FORGOT_LINK    = By.cssSelector("div.helps a[href='/Login/GetPass']");
+    private static final By ERROR_DIV      = By.cssSelector("div.error");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -69,13 +69,12 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    @Step("Set Remember Me = {0}")
+    @Step("Set Remember Me = {0} (no-op: checkbox không còn trên trang UTC)")
     public LoginPage setRememberMe(boolean checked) {
-        boolean current = isRememberMeSelected();
-        if (current != checked) {
-            // Click vào label để toggle checkbox (vì input#persistent thường bị ẩn).
-            click(REMEMBER_LABEL);
-        }
+        // Trang login UTC hiện tại không có Remember Me checkbox nữa.
+        // Method giữ lại để tương thích API với HardcodedTestCases;
+        // chỉ log để tiện debug, không throw, không làm hỏng test.
+        log.warn("setRememberMe({}) ignored: Remember Me checkbox không còn trên trang login UTC", checked);
         return this;
     }
 
@@ -114,10 +113,11 @@ public class LoginPage extends BasePage {
         return getText(ERROR_DIV).trim();
     }
 
-    @Step("Kiểm tra checkbox Remember Me đang được tích")
+    @Step("Đọc trạng thái Remember Me (luôn false: checkbox không còn trên trang UTC)")
     public boolean isRememberMeSelected() {
-        WebElement checkbox = waitForVisible(REMEMBER_INPUT);
-        return checkbox.isSelected();
+        // Trang login UTC hiện tại không có Remember Me → luôn coi như không tích.
+        log.debug("isRememberMeSelected() → false (no checkbox on page)");
+        return false;
     }
 
     @Step("Kiểm tra đang ở trang login")
