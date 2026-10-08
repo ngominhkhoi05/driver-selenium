@@ -103,18 +103,18 @@ public final class HardcodedTestCases {
 
     public static final TestCaseSpec TC9_USERNAME_ONLY_WHITESPACE = TestCaseSpec.of(
             "TC9",
-            "Username chỉ chứa khoảng trắng → báo lỗi",
+            "Username chỉ chứa khoảng trắng → báo INVALID_CREDENTIALS (server không trim)",
             List.of("Mở trang login", "Nhập username = '   '", "Nhập password hợp lệ", "Click Login"),
             of("   ", "123456@utc", false),
-            "EMPTY_USERNAME"
+            "INVALID_CREDENTIALS"
     );
 
     public static final TestCaseSpec TC10_PASSWORD_ONLY_WHITESPACE = TestCaseSpec.of(
             "TC10",
-            "Password chỉ chứa khoảng trắng → báo lỗi",
+            "Password chỉ chứa khoảng trắng → báo INVALID_CREDENTIALS (server không trim)",
             List.of("Mở trang login", "Nhập username hợp lệ", "Nhập password = '   '", "Click Login"),
             of("huongnt", "   ", false),
-            "EMPTY_PASSWORD"
+            "INVALID_CREDENTIALS"
     );
 
     // ====================================================================
