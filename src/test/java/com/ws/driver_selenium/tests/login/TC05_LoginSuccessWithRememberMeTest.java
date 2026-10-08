@@ -11,6 +11,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Chức năng Đăng nhập")
 @Story("Luồng đăng nhập & phiên")
 @Severity(SeverityLevel.BLOCKER)
+@Disabled("TC05 cần credential thật trên server UTC. Plan đang dùng placeholder " +
+        "'huongnt/123456@utc' từ bản Python cũ, server UTC trả về 'Mật khẩu không đúng' " +
+        "(đã verify bằng Chrome thật ngày 2026-10-08). " +
+        "BỎ @Disabled KHI có tài khoản thật: thay credential trong " +
+        "HardcodedTestCases.TC5_LOGIN_SUCCESS_WITH_REMEMBER rồi xoá annotation này.")
 class TC05_LoginSuccessWithRememberMeTest extends BaseTest {
 
     @Test
