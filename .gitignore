@@ -1,4 +1,10 @@
 HELP.md
+# Chỉ cho phép commit & push file README.md lên GitHub.
+# Tất cả file .md khác (kế hoạch, quy tắc, ghi chú nội bộ) đều bị ignore
+# để giữ repo public gọn gàng theo yêu cầu của người dùng.
+/PLAN_JAVA_SPRINGBOOT_GRADLE.md
+/PLAN_Detail.md
+/AGENT_GITFLOW.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
