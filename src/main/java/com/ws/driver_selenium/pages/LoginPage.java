@@ -113,6 +113,22 @@ public class LoginPage extends BasePage {
         return getText(ERROR_DIV).trim();
     }
 
+    @Step("Đọc attribute 'type' của ô password (dùng để verify masking)")
+    public String getPasswordFieldType() {
+        WebElement pwd = waitForVisible(PASSWORD_INPUT);
+        String type = pwd.getDomAttribute("type");
+        log.debug("Password input type attribute = '{}'", type);
+        return type;
+    }
+
+    @Step("Đọc attribute 'maxlength' của ô password (dùng để verify giới hạn độ dài client-side)")
+    public String getPasswordMaxLength() {
+        WebElement pwd = waitForVisible(PASSWORD_INPUT);
+        String maxLength = pwd.getDomAttribute("maxlength");
+        log.debug("Password input maxlength attribute = '{}'", maxLength);
+        return maxLength;
+    }
+
     @Step("Đọc trạng thái Remember Me (luôn false: checkbox không còn trên trang UTC)")
     public boolean isRememberMeSelected() {
         // Trang login UTC hiện tại không có Remember Me → luôn coi như không tích.
