@@ -34,9 +34,9 @@ dependencies {
 	// --- Assertions: AssertJ (mạch lạc, dễ đọc hơn JUnit assert) ---
 	testImplementation 'org.assertj:assertj-core'
 
-	// --- Allure ---
-	testImplementation 'io.qameta.allure:allure-junit5'
-	testImplementation 'io.qameta.allure:allure-attachments'
+	// --- Allure (Spring BOM không quản lý Allure, đặt version tường minh) ---
+	implementation 'io.qameta.allure:allure-junit5:2.35.5'
+	implementation 'io.qameta.allure:allure-attachments:2.35.5'
 
 	// --- Logging (SLF4J + Logback) ---
 	implementation 'org.slf4j:slf4j-api'
