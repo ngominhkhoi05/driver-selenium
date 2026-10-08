@@ -143,6 +143,17 @@ public class LoginPage extends BasePage {
                 .contains("/Login");
     }
 
+    @Step("Đọc URL hiện tại của trang")
+    public String getCurrentUrl() {
+        return getDriver().getCurrentUrl();
+    }
+
+    @Step("Đợi URL chứa đoạn cho trước")
+    public LoginPage waitForUrlContains(String fragment, Duration timeout) {
+        wait(timeout).until(d -> d.getCurrentUrl().contains(fragment));
+        return this;
+    }
+
     /**
      * Chờ URL rời khỏi trang login → chứng tỏ đã navigate sau khi submit.
      * KHÔNG assert — chỉ navigate + đợi.
