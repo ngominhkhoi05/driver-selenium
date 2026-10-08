@@ -31,14 +31,16 @@ class LoginPageSmokeTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Smoke: LoginPage có thể đọc trạng thái Remember Me ban đầu")
+    @DisplayName("Smoke: Remember Me checkbox đã bị UTC gỡ khỏi UI → isRememberMeSelected() luôn false")
     void rememberMeShouldHaveInitialState() {
         LoginPage loginPage = new LoginPage(DriverManager.get());
         loginPage.open();
 
-        // Không assert giá trị cụ thể vì phụ thuộc vào trang thật,
-        // chỉ verify rằng isRememberMeSelected() không ném exception.
+        // UTC đã gỡ Remember Me khỏi form login (xác nhận bằng snapshot ngày 2026-10-08).
+        // isRememberMeSelected() giờ là no-op, luôn trả về false và KHÔNG throw.
         boolean initial = loginPage.isRememberMeSelected();
-        assertThat(initial).isIn(true, false);
+        assertThat(initial)
+                .as("Remember Me checkbox không còn trên UI → luôn false")
+                .isFalse();
     }
 }
