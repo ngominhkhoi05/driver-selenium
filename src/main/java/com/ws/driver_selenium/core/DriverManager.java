@@ -43,6 +43,16 @@ public final class DriverManager {
         return driver;
     }
 
+    /**
+     * Lấy driver hiện tại của thread, hoặc {@code null} nếu chưa {@link #set(WebDriver)}.
+     * <p>
+     * Dùng cho các extension/test không yêu cầu driver (ví dụ {@code HardcodedTestCasesTest}).
+     * Khác với {@link #get()}: method này KHÔNG throw exception khi driver null.
+     */
+    public static WebDriver getOrNull() {
+        return DRIVER.get();
+    }
+
     public static void quit() {
         WebDriver driver = DRIVER.get();
         if (driver != null) {
